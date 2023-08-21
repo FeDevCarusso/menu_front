@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react'
-import { login, is_login } from '../api/axios'
+import { is_login } from '../api/axios'
 
 export const AuthContext = createContext()
 
@@ -9,7 +9,7 @@ const AuthProvider = ({ children }) => {
 
     useEffect(function () {
         async function initLoginService() {
-            const { data, status } = await is_login()
+            const data = await is_login().data
             setIsChecked(true)
             setIsAuthenticated(data?.bool)
             console.log(data?.bool)

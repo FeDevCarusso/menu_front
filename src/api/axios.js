@@ -33,3 +33,12 @@ export async function logout() {
         return error.response
     }
 }
+
+export async function getRestaurant(restaurant) {
+    try {
+        const result = await axios.get(`${REACT_APP_API_URL}/?restaurant=${restaurant}`)
+        return result?.data
+    } catch (error) {
+        return error.response
+    }
+}

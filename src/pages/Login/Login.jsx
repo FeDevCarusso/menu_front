@@ -17,8 +17,8 @@ const Login = () => {
     e.preventDefault();
     try {
       const result = await login(username, password);
-      const { data: resultData } = result;
-      const { data } = resultData;
+      const resultData = result?.resultData;
+      const data = resultData?.data;
 
       if (data?.length) {
         const newErrors = {};
@@ -30,11 +30,11 @@ const Login = () => {
         setErrors({ username: "", password: "" });
       }
 
-      if (resultData.message) {
+      if (resultData?.message) {
         alert(resultData.message)
       }
 
-      if (resultData.bool) {
+      if (resultData?.bool) {
         window.location.reload()
       }
     } catch (error) {

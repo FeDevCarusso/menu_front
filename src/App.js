@@ -4,6 +4,7 @@ import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
+import Restaurant from "./pages/Restaurant/Restaurant";
 
 function App() {
   const { isChecked } = useContext(AuthContext)
@@ -14,6 +15,8 @@ function App() {
       <Routes>
         <Route index element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/restaurant" element={<Restaurant />} />
+
       </Routes>
     </div>
   );
