@@ -36,7 +36,16 @@ export async function logout() {
 
 export async function getRestaurant(restaurant) {
     try {
-        const result = await axios.get(`${REACT_APP_API_URL}/?restaurant=${restaurant}`)
+        const result = await axios.get(`${REACT_APP_API_URL}/restaurant?restaurant=${restaurant}`)
+        return result?.data
+    } catch (error) {
+        return error.response
+    }
+}
+
+export async function find_restaurants(query) {
+    try {
+        const result = await axios.get(`${REACT_APP_API_URL}/?restaurant=${query}`)
         return result?.data
     } catch (error) {
         return error.response
