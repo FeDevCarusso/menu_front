@@ -20,7 +20,7 @@ const MyNav = () => {
     }
     return (
         <Navbar className='bg-dark px-5' variant='dark' expand='lg'>
-            <Navbar.Brand>ClickFood</Navbar.Brand>
+            <Navbar.Brand as={Link} y>ClickFood</Navbar.Brand>
             <Navbar.Toggle aria-controls='basic-navbar-nav' />
             <Navbar.Collapse id='basic-navbar-nav'>
                 <Nav className='ms-auto'>

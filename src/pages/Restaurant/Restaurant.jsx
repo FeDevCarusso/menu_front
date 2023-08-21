@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getRestaurant } from '../../api/axios';
 import { Button, Card, Col, Container, Image, Row } from 'react-bootstrap';
 import placeholder from '../../assets/image_placeholder.jpg';
+import { FaShoppingCart } from 'react-icons/fa'
 
 const Restaurant = () => {
     const query = new URLSearchParams(window.location.search).get("q");
@@ -11,6 +12,7 @@ const Restaurant = () => {
         async function getRestaurantData() {
             const data = await getRestaurant(query);
             setRestaurant(data);
+            console.log(data)
         }
         getRestaurantData();
     }, [query]);
@@ -21,7 +23,11 @@ const Restaurant = () => {
                 {data?.currentResto?.restaurantName}
             </h1>
             <Container className='d-flex justify-content-center'>
-                <Image src={placeholder} fluid className='rounded-4 shadow' />
+                <Image src={data?.currentResto?.restaurantImage
+                    ?
+                    `${process.env.REACT_APP_API_URL}/images/${data?.currentResto?.restaurantImage}`
+                    :
+                    placeholder} fluid className='rounded-4 shadow' />
             </Container>
 
             <Container>
@@ -47,7 +53,7 @@ const Restaurant = () => {
                                 <Card key={index} className="shadow mb-2 border-secondary rounded-2">
                                     <Row className="align-items-center">
                                         <Col xs={12} md={3} className="d-none d-md-flex align-items-center px-0">
-                                            <Card.Img src={placeholder} className="border border-dark card-image mx-0 mt-0 shadow-sm img-fluid" style={{ height: '100%' }} />
+                                            <Card.Img src={food?.image ? `${process.env.REACT_APP_API_URL}/images/${food?.image}` : placeholder} className="border border-dark card-image mx-0 mt-0 shadow-sm img-fluid" style={{ height: '100%' }} />
                                         </Col>
                                         <Col xs={12} md={9}>
                                             <Card.Body>
@@ -58,7 +64,7 @@ const Restaurant = () => {
                                                     ))}
                                                 </div>
                                                 <div className="d-md-none">
-                                                    <Card.Img src={placeholder} className="border  shadow card-image img-fluid mb-2" />
+                                                    <Card.Img src={food?.image ? `${process.env.REACT_APP_API_URL}/images/${food?.image}` : placeholder} className="border  shadow card-image img-fluid mb-2" />
                                                     {food.ingredients.map((ingredient, index) => (
                                                         <p key={index} className="mb-0">* {ingredient}</p>
                                                     ))}
@@ -76,10 +82,7 @@ const Restaurant = () => {
                 </Row>
             </Container>
 
-
-
-
-
+            <Button variant='danger' style={{fontSize:"x-large", position: "fixed", bottom: "0", right: 0 }} className='m-3'><FaShoppingCart /></Button>
         </Container >
     );
 }
