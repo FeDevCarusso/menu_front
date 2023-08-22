@@ -10,9 +10,9 @@ export async function login(username, password) {
         }, {
             withCredentials: true
         })
-        return response
+        return response.data
     } catch (error) {
-        return error.response
+        return error.response.data
     }
 }
 

@@ -9,10 +9,9 @@ const AuthProvider = ({ children }) => {
 
     useEffect(function () {
         async function initLoginService() {
-            const data = await is_login().data
+            const result = await is_login()
             setIsChecked(true)
-            setIsAuthenticated(data?.bool)
-            console.log(data?.bool)
+            setIsAuthenticated(result?.data?.bool)
         }
 
         initLoginService()

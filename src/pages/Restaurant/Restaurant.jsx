@@ -19,7 +19,7 @@ const Restaurant = () => {
 
     return (
         <Container>
-            <h1 className='text-center my-3 bg-danger rounded-4 shadow p-3'>
+            <h1 className='text-center text-light my-3 bg-secondary rounded-4 shadow p-3 border border-success'>
                 {data?.currentResto?.restaurantName}
             </h1>
             <Container className='d-flex justify-content-center'>
@@ -27,17 +27,17 @@ const Restaurant = () => {
                     ?
                     `${process.env.REACT_APP_API_URL}/images/${data?.currentResto?.restaurantImage}`
                     :
-                    placeholder} fluid className='rounded-4 shadow' />
+                    placeholder} fluid className='rounded-4 shadow border border-success' />
             </Container>
 
             <Container>
                 <Row>
                     <Col>
                         <div className='d-flex overflow-auto my-2'>
-                            <Button className='btn btn-secondary flex-shrink-0 mx-1'>Todos</Button>
-                            <Button className='btn btn-secondary flex-shrink-0 mx-1'>Promos</Button>
+                            <Button className='border border-success btn btn-secondary flex-shrink-0 mx-1'>Todos</Button>
+                            <Button className='border border-success btn btn-secondary flex-shrink-0 mx-1'>Promos</Button>
                             {data?.currentRestoCats?.map((c, index) => (
-                                <Button key={index} className="btn btn-secondary flex-shrink-0 mx-1">{c.name}</Button>
+                                <Button key={index} className="border border-success btn btn-secondary flex-shrink-0 mx-1">{c.name}</Button>
                             ))}
                         </div>
                     </Col>
@@ -52,8 +52,8 @@ const Restaurant = () => {
                             cat?.Food?.map((food, index) => (
                                 <Card key={index} className="shadow mb-2 border-secondary rounded-2">
                                     <Row className="align-items-center">
-                                        <Col xs={12} md={3} className="d-none d-md-flex align-items-center px-0">
-                                            <Card.Img src={food?.image ? `${process.env.REACT_APP_API_URL}/images/${food?.image}` : placeholder} className="border border-dark card-image mx-0 mt-0 shadow-sm img-fluid" style={{ height: '100%' }} />
+                                        <Col xs={12} md={3} className="d-none d-md-flex align-items-center px-3 py-1">
+                                            <Card.Img src={food?.image ? `${process.env.REACT_APP_API_URL}/images/${food?.image}` : placeholder} className="border border-dark card-image mx-auto mt-0 shadow-sm img-fluid" style={{ height: '100%' }} />
                                         </Col>
                                         <Col xs={12} md={9}>
                                             <Card.Body>
@@ -82,7 +82,7 @@ const Restaurant = () => {
                 </Row>
             </Container>
 
-            <Button variant='danger' style={{fontSize:"x-large", position: "fixed", bottom: "0", right: 0 }} className='m-3'><FaShoppingCart /></Button>
+            <Button variant='secondary' style={{ fontSize: "x-large", position: "fixed", bottom: "0", right: 0 }} className='m-3 text-light border border-success'><FaShoppingCart /></Button>
         </Container >
     );
 }

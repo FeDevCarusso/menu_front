@@ -15,30 +15,19 @@ const Login = () => {
 
   async function login_handler(e) {
     e.preventDefault();
-    try {
-      const result = await login(username, password);
-      const resultData = result?.resultData;
-      const data = resultData?.data;
+    const result = await login(username, password);
+    const { bool, message, data } = result
 
-      if (data?.length) {
-        const newErrors = {};
-        data.forEach(error => {
-          newErrors[error.path] = error.message
-        });
-        setErrors(newErrors);
-      } else {
-        setErrors({ username: "", password: "" });
-      }
+    if (message) {
+      alert(message)
+    }
 
-      if (resultData?.message) {
-        alert(resultData.message)
-      }
-
-      if (resultData?.bool) {
+    if (typeof bool === "boolean") {
+      if (bool) {
         window.location.reload()
+      } else {
+        alert("error")
       }
-    } catch (error) {
-      console.error("Error:", error);
     }
   }
 

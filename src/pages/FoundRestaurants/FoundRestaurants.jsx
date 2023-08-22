@@ -24,7 +24,6 @@ const FoundRestaurants = () => {
         getResponse();
     }, [query])
 
-    console.log(restaurants)
     return (
         <Container className="py-4">
 
