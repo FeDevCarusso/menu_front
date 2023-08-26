@@ -8,6 +8,7 @@ import Restaurant from "./pages/Restaurant/Restaurant";
 import FoundRestaurants from "./pages/FoundRestaurants/FoundRestaurants";
 import RestaurantPanel from "./pages/RestaurantPanel/RestaurantPanel";
 import AddCat from "./pages/AddCategory/AddCat";
+import AddFood from "./pages/AddFood/AddFood";
 
 function App() {
   const { isChecked } = useContext(AuthContext)
@@ -22,7 +23,7 @@ function App() {
         <Route path="/foundRestaurants" element={<FoundRestaurants />} />
         <Route path="/myResto" element={<RestaurantPanel />} />
         <Route path="/myResto/addCat" element={<AddCat />} />
-
+        <Route path="/myResto/addFood" element={<AddFood />} />
       </Routes>
     </div>
   );

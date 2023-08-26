@@ -3,6 +3,7 @@ import { Button, Container, Form } from 'react-bootstrap'
 import { add_category } from '../../api/myResto'
 import { Navigate } from 'react-router-dom'
 
+
 const AddCat = () => {
     const [category, setCategory] = useState("")
     const [error, setError] = useState("")
@@ -19,8 +20,8 @@ const AddCat = () => {
         }
 
 
-        if (data?.message) {
-            setError(data.message)
+        if (data) {
+            setError(data[0]?.message)
         }
 
         if (typeof bool === "boolean") {
