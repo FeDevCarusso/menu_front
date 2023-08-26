@@ -12,7 +12,7 @@ const AddFood = () => {
     });
 
     const [error, setError] = useState("");
-    const [done, setDone] = useState(false);
+    const [done, /*setDone*/] = useState(false);
 
     const [cats, setCats] = useState([]);
     const [selectedImage, setSelectedImage] = useState(null);

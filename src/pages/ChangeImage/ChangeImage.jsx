@@ -6,7 +6,7 @@ import { change_banner } from '../../api/myResto';
 const ChangeImage = () => {
     const [selectedImage, setSelectedImage] = useState(null);
     const [preview, setPreview] = useState(null);
-    const [done, setDone] = useState(false);
+const [done, /*setDone*/] = useState(false);
     const [imageError, setImageError] = useState("");
 
     async function submit_handler(e) {

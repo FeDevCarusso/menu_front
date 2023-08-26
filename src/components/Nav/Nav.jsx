@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Button, Nav, Navbar } from 'react-bootstrap';
+import { Nav, Navbar } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import { logout } from '../../api/axios';

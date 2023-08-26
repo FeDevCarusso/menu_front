@@ -7,7 +7,7 @@ const Login = () => {
   const { isAuthenticated } = useContext(AuthContext)
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
-  const [errors, setErrors] = useState({
+  const [errors/*, setErrors*/] = useState({
     username: "",
     password: ""
   })
@@ -16,7 +16,7 @@ const Login = () => {
   async function login_handler(e) {
     e.preventDefault();
     const result = await login(username, password);
-    const { bool, message, data } = result
+    const { bool, message, /*data*/ } = result
 
     if (message) {
       alert(message)
