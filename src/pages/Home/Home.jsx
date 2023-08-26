@@ -14,8 +14,8 @@ const Home = () => {
     return (
         <Container className="d-flex flex-column p-2 justify-content-center align-items-center vh-100">
 
-            <Image fluid style={{ width: "25em",filter: "invert()" }} className="my-2 brand-image bg-light p-3 px-3 mx-auto rounded-4 shadow border-success border" src={brandImage} alt="ClickFood Logo" />
-            <Row className="text-center mx-2 mb-5 border border-secondary">
+            <Image fluid style={{ width: "25em", filter: "invert()" }} className="my-2 brand-image bg-light p-3 px-3 mx-auto rounded-4 shadow border-success border" src={brandImage} alt="ClickFood Logo" />
+            <Row className="text-center mx-2 mb-0 border border-secondary">
                 <Col xs={11} sm={11} md={11} lg={11} className='bg-light  shadow p-3   d-flex flex-column w-100 border-secondary'>
                     <Form onSubmit={(e) => handle_submit(e)} className="d-flex align-items-center justify-content-center">
 
@@ -24,6 +24,7 @@ const Home = () => {
                     </Form>
                 </Col>
             </Row>
+                <h6 className='text-white bg-dark mt-3 p-2 rounded shadow'>Consejo: Si buscas con la barra vacia, vas a ver todos los restaurantes disponibles</h6>
 
 
 

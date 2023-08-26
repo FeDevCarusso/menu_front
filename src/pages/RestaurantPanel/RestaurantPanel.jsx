@@ -63,8 +63,14 @@ const RestaurantPanel = () => {
             <Container className='bg-light p-2 border border-secondary rounded-3'>
                 <h3 className='text-center my-2 bg-dark text-light rounded-2'>Administrar restaurante</h3>
                 <ManageCards linkTo="/myResto/addCat" title={"Agregar categoría"} buttonText={"Agregar categoría"} description={"Acá podes agregar una categoría para tus platos."} />
-                <ManageCards linkTo="addFood" title={"Agregar plato"} buttonText={"Agregar plato"} description={"Acá podes agregar platos a tu menú."} />
-                <ManageCards linkTo="viewFood" title={"Ver todos los platos"} buttonText={"Ver platos"} description={"Este espacio permite ver, editar o eliminar un plato de tu menú."} />
+                <ManageCards linkTo="/myResto/addFood" title={"Agregar plato"} buttonText={"Agregar plato"} description={"Acá podes agregar platos a tu menú."} />
+                <ManageCards linkTo="/myResto/viewFood" title={"Ver todos los platos"} buttonText={"Ver platos"} description={"Este espacio permite ver, editar o eliminar un plato de tu menú."} />
+                <ManageCards linkTo={`/restaurant?q=${restaurantData?.restaurantName}`} title={"Ver mi menu"} buttonText={"Ver platos"} description={"Te lleva al menu que ven tus clientes."} />
+
+            </Container>
+            <Container className='bg-light p-2 border border-secondary rounded-3'>
+                <h3 className='text-center my-2 bg-dark text-light rounded-2'>Editar apariencia</h3>
+                <ManageCards linkTo="/myResto/changeBanner" title={"Agregar categoría"} buttonText={"Cambiar banner"} description={"Cambiar banner del resto (Portada, imagen principal, logo)."} />
             </Container>
         </Container>
     )

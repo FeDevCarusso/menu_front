@@ -9,6 +9,7 @@ import FoundRestaurants from "./pages/FoundRestaurants/FoundRestaurants";
 import RestaurantPanel from "./pages/RestaurantPanel/RestaurantPanel";
 import AddCat from "./pages/AddCategory/AddCat";
 import AddFood from "./pages/AddFood/AddFood";
+import ChangeImage from "./pages/ChangeImage/ChangeImage";
 
 function App() {
   const { isChecked } = useContext(AuthContext)
@@ -24,6 +25,8 @@ function App() {
         <Route path="/myResto" element={<RestaurantPanel />} />
         <Route path="/myResto/addCat" element={<AddCat />} />
         <Route path="/myResto/addFood" element={<AddFood />} />
+        <Route path="/myResto/changeBanner" element={<ChangeImage />} />
+
       </Routes>
     </div>
   );

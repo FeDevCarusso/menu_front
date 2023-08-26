@@ -32,7 +32,7 @@ export async function get_cats() {
 }
 
 export async function add_food(
-    food,selectedImage
+    food, selectedImage
 ) {
     console.log(selectedImage)
     try {
@@ -40,6 +40,20 @@ export async function add_food(
             ...food,
             image: selectedImage
         }, {
+            withCredentials: true,
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        })
+        return response.data
+    } catch (error) {
+        return error.response.data
+    }
+}
+
+export async function change_banner(image) {
+    try {
+        const response = await axios.put(`${api_url}/user/edit_restaurant_image`, {image}, {
             withCredentials: true,
             headers: {
                 "Content-Type": "multipart/form-data"

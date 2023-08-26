@@ -16,6 +16,8 @@ const AddFood = () => {
 
     const [cats, setCats] = useState([]);
     const [selectedImage, setSelectedImage] = useState(null);
+    const [imagePreview, setImagePreview] = useState(null);
+
     const [imageError, setImageError] = useState("");
 
     useEffect(() => {
@@ -53,13 +55,16 @@ const AddFood = () => {
             if (selectedFile.type.startsWith('image/')) {
                 setSelectedImage(selectedFile);
                 setImageError('');
+                const imageURL = URL.createObjectURL(selectedFile);
+                setImagePreview(imageURL);
             } else {
                 setSelectedImage(null);
                 setImageError('Por favor, selecciona un archivo de imagen válido.');
+                setImagePreview(null);
             }
         }
     }
-    
+
 
     return done ? <Navigate to="/myResto" /> : (
         <Container fluid className='my-5 d-flex align-items-center justify-content-center'>
@@ -110,7 +115,7 @@ const AddFood = () => {
                 <Form.Group className='mt-2'>
                     <Form.Label className='text-center w-100'> Agregá una imagen </Form.Label>
                     <Form.Control type='file' accept='image/*' onChange={handleImageChange} className='border border-secondary' />
-                    {selectedImage && <img src={selectedImage} alt="Vista previa de la imagen" style={{ marginTop: '10px', maxWidth: '100%' }} />}
+                    {imagePreview && <img src={imagePreview} alt="Vista previa de la imagen" style={{ maxWidth: '100%', marginTop: '10px' }} />}
                     {imageError && <Form.Text className="text-danger">{imageError}</Form.Text>}
                 </Form.Group>
 
