@@ -1,0 +1,6 @@
+.float_button {
+  position: fixed;
+  bottom: 20px;
+  right: 25px;
+  z-index: 1000;
+}
