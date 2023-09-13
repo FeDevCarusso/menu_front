@@ -9,12 +9,13 @@ import {
   Form,
 } from "react-bootstrap";
 import { FaArrowLeft } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { DarkModeContext } from "../../context/DarkModeContext";
 import mockBurger from "../../assets/img/mock_burguer.jpg";
 import styles from "./Cart.module.css";
 
 const Cart = () => {
+  const { code } = useParams();
   const { isDark } = useContext(DarkModeContext);
   const [quantity, setQuantity] = useState(1);
 
@@ -103,7 +104,7 @@ const Cart = () => {
         <h3 className="text-decoration-underline">Total: ${subtotal}</h3>
         <Button
           as={Link}
-          to={"/my_order"}
+          to={`/my_order/${code}`}
           className="w-100 text-underline"
           variant="dark"
         >
@@ -112,7 +113,7 @@ const Cart = () => {
       </Container>
       <Button
         as={Link}
-        to={"/restaurant"}
+        to={`/restaurant/${code}`}
         className={`${styles.floating_button} ${
           isDark === "dark" ? "border-light" : "border-dark"
         }`}

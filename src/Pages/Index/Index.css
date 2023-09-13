@@ -1,27 +1,24 @@
-/* Estilos personalizados para el formulario */
 .custom-form {
-    background-color: #f8f9fa; /* Fondo suave */
-    border-radius: 10px; /* Bordes redondeados */
+    background-color: #f8f9fa; 
+    border-radius: 10px; 
     padding: 20px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Sombra suave */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   }
   
-  /* Estilos personalizados para el campo de entrada */
   .input-field {
-    border: 2px solid #ffc107; /* Borde amarillo */
-    border-radius: 5px; /* Bordes redondeados */
+    border: 2px solid #ffc107; 
+    border-radius: 5px; 
   }
   
-  /* Estilos para el botón */
   .btn-warning {
-    background-color: #ffc107; /* Fondo amarillo */
+    background-color: #ffc107; 
     border: none;
-    border-radius: 5px; /* Bordes redondeados */
+    border-radius: 5px; 
     font-weight: bold;
     transition: background-color 0.3s;
   }
   
   .btn-warning:hover {
-    background-color: #ff9800; /* Cambio de color al pasar el cursor */
+    background-color: #ff9800; 
   }
   

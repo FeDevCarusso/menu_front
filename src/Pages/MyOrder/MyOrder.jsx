@@ -1,15 +1,15 @@
-import React, { useContext } from "react";
-import { Badge, Button, Container, Table } from "react-bootstrap";
+import React, { useContext, useEffect, useState } from "react";
+import { Badge, Button, Container, Nav, Table } from "react-bootstrap";
 import { FaArrowLeft, FaDonate } from "react-icons/fa";
 import { DarkModeContext } from "../../context/DarkModeContext";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import styles from "../Home/Home.module.css";
+import { GlobalStorageContext } from "../../context/GlobalStorage";
 
 const MyOrder = () => {
   const { isDark } = useContext(DarkModeContext);
-
-  // Clase para el estilo de fondo en modo oscuro
-
+  const navigate = useNavigate();
+  const { restaurantCode } = useContext(GlobalStorageContext);
   return (
     <Container className={`mt-5 `}>
       <h1
@@ -84,13 +84,18 @@ const MyOrder = () => {
           </tr>
         </tbody>
       </Table>
-      <Button className={`w-100 shadow ${isDark === "light" ? "border border-dark" : "border-light"} shadow`} variant={isDark}>
+      <Button
+        className={`w-100 shadow ${
+          isDark === "light" ? "border border-dark" : "border-light"
+        } shadow`}
+        variant={isDark}
+      >
         <FaDonate className={`mx-2 `}></FaDonate>
         Pedir la cuenta
       </Button>
       <Button
         as={Link}
-        to={"/restaurant"}
+        to={`/restaurant/${restaurantCode}`}
         className={`${styles.float_button} ${
           isDark === "dark" ? "border-light" : "border-dark"
         }`}
