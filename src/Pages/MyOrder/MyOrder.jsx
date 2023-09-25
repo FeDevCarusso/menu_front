@@ -8,8 +8,8 @@ import { GlobalStorageContext } from "../../context/GlobalStorage";
 
 const MyOrder = () => {
   const { isDark } = useContext(DarkModeContext);
-  const navigate = useNavigate();
   const { restaurantCode } = useContext(GlobalStorageContext);
+
   return (
     <Container className={`mt-5 `}>
       <h1

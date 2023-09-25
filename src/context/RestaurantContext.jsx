@@ -11,7 +11,8 @@ const RestaurantProvider = ({ children }) => {
     useContext(GlobalStorageContext);
   const [data, setData] = useState(null);
   const [done, setDone] = useState(false);
-  const { code } = useParams();
+  const params = useParams();
+  const code = localStorage.getItem("code") || params.code;
   const [alertData, setAlertData] = useState({
     show: false,
     heading: "",
@@ -22,8 +23,10 @@ const RestaurantProvider = ({ children }) => {
   useEffect(
     function () {
       setData(null);
+      if (!code) {
+        return;
+      }
       get_resto_data(code).then((result) => {
-        console.log(result);
         if (result.status === 404) {
           setRestaurantCode(null);
           setAlertData({
@@ -41,7 +44,7 @@ const RestaurantProvider = ({ children }) => {
         }
       });
     },
-    [code]
+    [code, setRestaurantCode]
   );
 
   function handleCloseAlert(done) {

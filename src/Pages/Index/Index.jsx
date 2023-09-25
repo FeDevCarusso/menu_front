@@ -22,6 +22,7 @@ const Index = () => {
 
   function submitHandler(e) {
     e.preventDefault();
+    localStorage.setItem(`code`, restoCode);
     setRedirect(true);
   }
   return redirect ? (
