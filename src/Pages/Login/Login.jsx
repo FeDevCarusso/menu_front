@@ -163,7 +163,7 @@ const Login = () => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            zIndex: 999, // Asegura que la alerta esté por encima de otros elementos
+            zIndex: 999, 
           }}
         >
           <Alert variant={alertData.variant}>
