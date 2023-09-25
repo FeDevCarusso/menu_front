@@ -44,13 +44,16 @@ const Cart = () => {
       .map((food) => ({ id: food?.id, price: food?.price }));
 
     foods?.forEach((food) => {
-      const currentSubtotal = food?.price * prevCant[food?.id];
+      const currentSubtotal = food?.price * cant[food?.id];
       currTotal += parseFloat(currentSubtotal);
     });
     localStorage.setItem(`total_${code}`, currTotal);
     setShowTotal(currTotal);
   }
 
+  const setInitialCant = (id) => {
+    setCant({ ...cant, [id]: 1 });
+  };
   const decreaseQuantity = (id) => {
     if (cant[id] <= 1) {
       if (cant[id !== null]) {
@@ -101,11 +104,13 @@ const Cart = () => {
                         </strong>
                       </Card.Header>
                       <Card.Body className="p-3">
-                        <Badge className="m-1 bg-dark">Lechuga</Badge>
-                        <Badge className="m-1 bg-dark">Tomate</Badge>
-                        <Badge className="m-1 bg-dark">Jamón</Badge>
-                        <Badge className="m-1 bg-dark">Cheddar</Badge>
-                        <Badge className="m-1 bg-dark">Doble medallón</Badge>
+                        {food?.ingredients.split(",").map((i, idx) => {
+                          return (
+                            <Badge key={idx} className="m-1 bg-dark">
+                              {i}
+                            </Badge>
+                          );
+                        })}
                       </Card.Body>
                       <Form.Group className="mb-3 mx-2 pb-0">
                         <Form.Label>Cantidad:</Form.Label>
@@ -121,7 +126,7 @@ const Cart = () => {
                           </Button>
                           <Form.Control
                             type="number"
-                            value={cant[food?.id] || 1}
+                            value={cant[food?.id] || setInitialCant(food?.id)}
                             onChange={(e) =>
                               setCant({
                                 ...cant,
@@ -144,7 +149,10 @@ const Cart = () => {
                           Sub-total:
                         </Form.Label>
                         <h5 style={{ margin: "0" }}>
-                          ${food?.price * cant[food?.id]}
+                          $
+                          {cant[food?.id]
+                            ? food?.price * cant[food?.id]
+                            : food?.price}
                         </h5>
                       </Card.Footer>
                     </Col>

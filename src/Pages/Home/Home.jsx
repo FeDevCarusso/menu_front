@@ -53,7 +53,7 @@ const Home = () => {
           width: "100%",
         }}
       >
-        {data?.restaurantName || "Cargando ..."}
+        {data?.restaurant?.restaurantName || "Cargando ..."}
       </h3>
 
       <Image

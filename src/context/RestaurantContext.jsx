@@ -13,6 +13,7 @@ const RestaurantProvider = ({ children }) => {
   const [done, setDone] = useState(false);
   const params = useParams();
   const code = localStorage.getItem("code") || params.code;
+
   const [alertData, setAlertData] = useState({
     show: false,
     heading: "",
@@ -35,6 +36,8 @@ const RestaurantProvider = ({ children }) => {
             variant: "danger",
             body: result?.data?.message,
           });
+          localStorage.removeItem(`code`);
+          return;
         }
 
         if (result.status === 200) {
