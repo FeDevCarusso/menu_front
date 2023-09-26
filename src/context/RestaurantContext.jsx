@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { get_resto_data } from "../api/customer.api";
+import { get_order, get_resto_data } from "../api/customer.api";
 import { Alert, Button } from "react-bootstrap";
 import { GlobalStorageContext } from "./GlobalStorage";
 
@@ -13,6 +13,7 @@ const RestaurantProvider = ({ children }) => {
   const [done, setDone] = useState(false);
   const params = useParams();
   const code = localStorage.getItem("code") || params.code;
+  const [orderData, setOrderData] = useState(null);
 
   const [alertData, setAlertData] = useState({
     show: false,
@@ -46,6 +47,11 @@ const RestaurantProvider = ({ children }) => {
           setRestaurantCode(localStorage.getItem("code"));
         }
       });
+      get_order(code).then(function (response) {
+        if (response.data) {
+          setOrderData(response?.data);
+        }
+      });
     },
     [code, setRestaurantCode]
   );
@@ -64,7 +70,9 @@ const RestaurantProvider = ({ children }) => {
   }
 
   return (
-    <RestaurantContext.Provider value={{ data, code }}>
+    <RestaurantContext.Provider
+      value={{ data, code, orderData, setOrderData }}
+    >
       {children}
       {alertData.show && (
         <div

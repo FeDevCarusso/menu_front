@@ -1,16 +1,65 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Badge, Button, Container, Nav, Table } from "react-bootstrap";
+import { Badge, Button, Container, Table } from "react-bootstrap";
 import { FaArrowLeft, FaDonate } from "react-icons/fa";
 import { DarkModeContext } from "../../context/DarkModeContext";
-import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styles from "../Home/Home.module.css";
-import { GlobalStorageContext } from "../../context/GlobalStorage";
+import { RestaurantContext } from "../../context/RestaurantContext";
+import { get_order } from "../../api/customer.api";
 
 const MyOrder = () => {
   const { isDark } = useContext(DarkModeContext);
-  const { restaurantCode } = useContext(GlobalStorageContext);
+  const {
+    code: restaurantCode,
+    orderData,
+    setOrderData,
+  } = useContext(RestaurantContext);
 
-  return (
+  useEffect(function () {
+    updateOrderData(restaurantCode);
+  }, []);
+
+  function updateOrderData(code) {
+    get_order(code).then(function (response) {
+      if (response.data) {
+        setOrderData(response?.data);
+        if (response?.data?.total !== null) {
+          localStorage.setItem(`has_order_${code}`, true);
+        } else {
+          localStorage.removeItem(`has_order_${code}`);
+        }
+      }
+    });
+  }
+
+  // if (orderData) {
+  //   console.log(orderData);
+  // }
+
+  return orderData?.message ? (
+    <Container>
+      <h1
+        style={{ marginTop: "3em" }}
+        className={`text-center text-${
+          isDark === "light" ? "dark" : "light"
+        } border border-dark rounded-3 bg-${isDark}  `}
+      >
+        {orderData?.message}
+      </h1>
+
+      <Button
+        as={Link}
+        to={`/restaurant/${restaurantCode}`}
+        className={`${styles.float_button} ${
+          isDark === "dark" ? "border-light" : "border-dark"
+        }`}
+        text={isDark === "light" ? "dark" : "light"}
+        variant={isDark}
+      >
+        <FaArrowLeft style={{ fontSize: "20px" }} className="m-1 my-2" />
+      </Button>
+    </Container>
+  ) : !orderData ? null : (
     <Container className={`mt-5 `}>
       <h1
         style={{ marginTop: "3em" }}
@@ -41,46 +90,29 @@ const MyOrder = () => {
           <tr>
             <th>Producto</th>
             <th>Cantidad</th>
-            <th>Estado</th>
             <th>Subtotal</th>
           </tr>
         </thead>
         <tbody>
+          {orderData &&
+            Object.keys(orderData)?.map((key, index) => {
+              if (typeof orderData[key] === "object" && orderData[key]?.id) {
+                const current = orderData[key];
+                return (
+                  <tr key={index}>
+                    <td>{current?.foodName}</td>
+                    <td>{current?.cant}</td>
+                    <td>${current?.price * current?.cant}</td>
+                  </tr>
+                );
+              }
+              return null;
+            })}
           <tr>
-            <td>Hamburguesa Completa</td>
-            <td>1</td>
-            <td className={`text-${isDark === "dark" ? "warning" : "success"}`}>
-              Pendiente
-            </td>
-            <td>$3500</td>
-          </tr>
-          <tr>
-            <td>Otro Producto</td>
-            <td>2</td>
-            <td className={`text-${isDark === "dark" ? "success" : "danger"}`}>
-              Entregado
-            </td>
-            <td>$7000</td>
-          </tr>
-          <tr>
-            <td>Otro Producto </td>
-            <td>2</td>
-            <td className={`text-${isDark === "dark" ? "danger" : "success"}`}>
-              Rechazado
-            </td>
-            <td
-              className={`text-decoration-line-through text-${
-                isDark === "dark" ? "danger" : "success"
-              }`}
-            >
-              $1500
-            </td>
-          </tr>
-          <tr>
-            <td colSpan="3" className="text-start">
+            <td colSpan="2" className="text-start">
               <strong>Total:</strong>
             </td>
-            <td>$10500</td>
+            <td>${orderData?.total}</td>
           </tr>
         </tbody>
       </Table>

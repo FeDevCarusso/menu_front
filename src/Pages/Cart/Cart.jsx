@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import {
   Badge,
   Button,
@@ -9,30 +9,25 @@ import {
   Form,
 } from "react-bootstrap";
 import { FaArrowLeft } from "react-icons/fa";
-import { Link, json } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { DarkModeContext } from "../../context/DarkModeContext";
 import styles from "./Cart.module.css";
 import { RestaurantContext } from "../../context/RestaurantContext";
+import { add_to_order } from "../../api/customer.api";
 
 const Cart = () => {
   const { data, code } = useContext(RestaurantContext);
   const order = JSON.parse(localStorage.getItem(`order_${code}`));
   const { isDark } = useContext(DarkModeContext);
-
   const prevCant = JSON.parse(localStorage.getItem(`cant_${code}`));
   const prevTotal = JSON.parse(localStorage.getItem(`total_${code}`));
-
   const [cant, setCant] = useState(prevCant || {});
   const [total, setShowTotal] = useState(prevTotal || 0);
-
-  useEffect(
-    function () {
-      setTotal();
-    },
-    [data, cant]
+  const [redirect, setRedirect] = useState(
+    localStorage.getItem(`has_order_${code}`) ? true : false
   );
 
-  function setTotal() {
+  const setTotal = useCallback(() => {
     let currTotal = 0;
     const foods = data?.foods
       ?.filter((food) => {
@@ -49,6 +44,23 @@ const Cart = () => {
     });
     localStorage.setItem(`total_${code}`, currTotal);
     setShowTotal(currTotal);
+  }, [data, cant, code]);
+
+  useEffect(
+    function () {
+      setTotal();
+    },
+    [data, cant, setTotal]
+  );
+
+  async function handleOrder(e) {
+    e.preventDefault();
+    const response = await add_to_order(cant, code);
+    const bool = response?.data?.bool;
+    if (bool && bool === true) {
+      localStorage.setItem(`has_order_${code}`, true);
+      return setRedirect(true);
+    }
   }
 
   const setInitialCant = (id) => {
@@ -75,7 +87,9 @@ const Cart = () => {
     return;
   };
 
-  return (
+  return redirect ? (
+    <Navigate to={`/my_order/${code}`} />
+  ) : (
     <div className="py-5">
       <h3 className="rounded-3 bg-dark text-light border border-dark  mx-2 text-center  mt-4">
         Mesa: <span className="font-weight-bold">A-1</span>
@@ -167,14 +181,11 @@ const Cart = () => {
         className="border-top py-3 bg-light position-fixed bottom-0 border-secondary"
       >
         <h3 className="text-decoration-underline">Total: ${total}</h3>
-        <Button
-          as={Link}
-          to={`/my_order/${code}`}
-          className="w-100 text-underline"
-          variant="dark"
-        >
-          Pedir
-        </Button>
+        <Form onSubmit={(e) => handleOrder(e)}>
+          <Button className="w-100 text-underline" variant="dark" type="submit">
+            Pedir
+          </Button>
+        </Form>
       </Container>
       <Button
         as={Link}
@@ -192,63 +203,3 @@ const Cart = () => {
 };
 
 export default Cart;
-
-/* <Card className="border-dark mb-3">
-          <Row className="align-items-center">
-            <Col md={3}>
-              <Card.Img
-                variant="left"
-                className="w-100 rounded-0 border-right border-secondary"
-                src={mockBurger}
-              />
-            </Col>
-            <Col md={9}>
-              <Card.Header className="mb-2">
-                <strong>
-                  Hamburguesa completa{" "}
-                  <i className="text-muted text-decoration-underline">
-                    ${3500}
-                  </i>
-                </strong>
-              </Card.Header>
-              <Card.Body className="p-3">
-                <Badge className="m-1 bg-dark">Lechuga</Badge>
-                <Badge className="m-1 bg-dark">Tomate</Badge>
-                <Badge className="m-1 bg-dark">Jamón</Badge>
-                <Badge className="m-1 bg-dark">Cheddar</Badge>
-                <Badge className="m-1 bg-dark">Doble medallón</Badge>
-              </Card.Body>
-              <Form.Group className="mb-3 mx-2 pb-0">
-                <Form.Label>Cantidad:</Form.Label>
-                <div
-                  className={`d-flex align-items-center border ${styles.inputSpinner}`}
-                >
-                  <Button
-                    variant="dark"
-                    className=""
-                    onClick={decreaseQuantity}
-                  >
-                    -
-                  </Button>
-                  <Form.Control
-                    type="number"
-                    value={quantity}
-                    onChange={(e) => setQuantity(e.target.value)}
-                    className="mx-2 border-dark text-center"
-                  />
-                  <Button
-                    variant="dark"
-                    className=""
-                    onClick={increaseQuantity}
-                  >
-                    +
-                  </Button>
-                </div>
-              </Form.Group>
-              <Card.Footer className="bg-light d-flex justify-content-between">
-                <Form.Label style={{ margin: "0" }}>Sub-total:</Form.Label>
-                <h5 style={{ margin: "0" }}>${subtotal}</h5>
-              </Card.Footer>
-            </Col>
-          </Row>
-        </Card> */
